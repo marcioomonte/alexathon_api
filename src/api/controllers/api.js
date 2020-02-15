@@ -44,8 +44,12 @@ router.post('/provas/:prova_id/respostas', async (req, res) => {
   const resposta = { ...req.body, prova_id: req.params.prova_id, id: uuid() }
 
   await dc.put({ TableName: TableRespostas, Item: resposta })
+  const questoes = await dc.scan({ TableName: TableQuestoes })
+  const questao = questoes.Items.find(i => i.id == resposta.questao_id)
 
-  res.status(CREATED).send()
+  await dc.put({ TableName: TableQuestoes, Item: { ...questao, respondida: true } })
+
+  res.status(CREATED).send({ message: 'Registrado com sucess!' })
 })
 
 router.get('/provas/:prova_id/respostas', async (req, res) => {
