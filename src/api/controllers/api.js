@@ -1,10 +1,8 @@
 import express from 'express'
-import { OK } from 'http-status-codes'
+import { OK, CREATED } from 'http-status-codes'
 
 import provas from '../objects/provas'
-import questoes from '../objects/questoes'
 import DynamoClient from '../utils/dynamo-client'
-import { CREATED } from '../../../.webpack/service/src/api/bin'
 
 const dc = new DynamoClient()
 const router = express.Router()
