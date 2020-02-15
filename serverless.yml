@@ -8,6 +8,7 @@ plugins:
 custom:
   table_provas: ${file(./resources.yml):custom.table_provas}
   table_questoes: ${file(./resources.yml):custom.table_questoes}
+  table_respostas: ${file(./resources.yml):custom.table_respostas}
 
 provider:
   name: aws
@@ -28,10 +29,12 @@ provider:
       Resource:
         - 'Fn::ImportValue': ${self:custom.table_provas}-ProvaTableArn
         - 'Fn::ImportValue': ${self:custom.table_questoes}-QuestaoTableArn
+        - 'Fn::ImportValue': ${self:custom.table_respostas}-RespostaTableArn
   environment:
     DEBUG: true
     TABLE_PROVAS: ${self:custom.table_provas}
     TABLE_QUESTOES: ${self:custom.table_questoes}
+    TABLE_RESPOSTAS: ${self:custom.table_respostas}
 
 functions:
   samples:

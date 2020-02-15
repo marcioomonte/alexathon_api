@@ -4,6 +4,7 @@ service:
 custom:
   table_provas: 'provas'
   table_questoes: 'questoes'
+  table_respostas: 'respostas'
 
 provider:
   name: aws
@@ -38,6 +39,19 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    RespostasDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.table_respostas}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
   Outputs:
     ProvaTableArn:
@@ -54,3 +68,10 @@ resources:
           - Arn
       Export:
         Name: ${self:custom.table_questoes}-QuestaoTableArn
+    RespostaTableArn:
+      Value:
+        Fn::GetAtt:
+          - RespostasDynamoDBTable
+          - Arn
+      Export:
+        Name: ${self:custom.table_respostas}-RespostaTableArn

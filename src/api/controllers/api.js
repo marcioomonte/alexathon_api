@@ -3,25 +3,37 @@ import { OK } from 'http-status-codes'
 
 import provas from '../objects/provas'
 import questoes from '../objects/questoes'
+import DynamoClient from '../utils/dynamo-client'
+
+const dc = new DynamoClient()
 const router = express.Router()
+
+const TableProvas = process.env.TABLE_PROVAS
+const TableQuestoes = process.env.TABLE_QUESTOES
 
 router.get('/disciplina', async (req, res) => {
   res.status(OK).send({ disciplina: provas })
 })
 
 router.get('/provas', async (req, res) => {
-  res.status(OK).send({ provas: provas })
+  const provas = await dc.scan({ TableName: TableProvas })
+
+  res.status(OK).send({ provas: provas.Items })
 })
 
 router.get('/provas/:prova_id/questoes', async (req, res) => {
   const { prova_id } = req.params
-  return res.status(OK).json(questoes.filter(q => q.prova_id === Number(prova_id)))
+  const response = await dc.scan({ TableName: TableQuestoes })
+  const questoes = response.Items.filter(i => prova_id == i.prova_id)
+
+  return res.status(OK).json(questoes)
 })
 
 router.get('/provas/:prova_id/questao/:questao_id', async (req, res) => {
   const { questao_id } = req.params
 
-  const questao = questoes.filter(q => q.id === Number(questao_id))
+  const response = await dc.scan({ TableName: TableQuestoes })
+  const questao = response.Items.find(i => questao_id == i.id)
 
   res.status(OK).json(questao)
 })
