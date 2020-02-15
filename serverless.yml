@@ -6,7 +6,8 @@ plugins:
   - serverless-offline
 
 custom:
-  table: ${file(./resources.yml):custom.table}
+  table_provas: ${file(./resources.yml):custom.table_provas}
+  table_questoes: ${file(./resources.yml):custom.table_questoes}
 
 provider:
   name: aws
@@ -25,10 +26,12 @@ provider:
       Action:
         - dynamodb:*
       Resource:
-        - 'Fn::ImportValue': ${self:custom.table}-ProvaTableArn
+        - 'Fn::ImportValue': ${self:custom.table_provas}-ProvaTableArn
+        - 'Fn::ImportValue': ${self:custom.table_questoes}-QuestaoTableArn
   environment:
     DEBUG: true
-    TABLE: ${self:custom.table}
+    TABLE_PROVAS: ${self:custom.table_provas}
+    TABLE_QUESTOES: ${self:custom.table_questoes}
 
 functions:
   samples:

@@ -2,7 +2,8 @@ service:
   name: alexathon-api-resources
 
 custom:
-  table: 'provas'
+  table_provas: 'provas'
+  table_questoes: 'questoes'
 
 provider:
   name: aws
@@ -14,7 +15,20 @@ resources:
     ProvaDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:custom.table}
+        TableName: ${self:custom.table_provas}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    QuestoesDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.table_questoes}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -32,4 +46,11 @@ resources:
           - ProvaDynamoDBTable
           - Arn
       Export:
-        Name: ${self:custom.table}-ProvaTableArn
+        Name: ${self:custom.table_provas}-ProvaTableArn
+    QuestaoTableArn:
+      Value:
+        Fn::GetAtt:
+          - QuestoesDynamoDBTable
+          - Arn
+      Export:
+        Name: ${self:custom.table_questoes}-QuestaoTableArn

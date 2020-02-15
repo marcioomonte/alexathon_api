@@ -29,13 +29,17 @@
           "Resource": [
             {
               "Fn::ImportValue": "provas-ProvaTableArn"
+            },
+            {
+              "Fn::ImportValue": "questoes-QuestaoTableArn"
             }
           ]
         }
       ],
       "environment": {
         "DEBUG": true,
-        "TABLE": "provas"
+        "TABLE_PROVAS": "provas",
+        "TABLE_QUESTOES": "questoes"
       },
       "region": "us-east-1",
       "versionFunctions": true,
@@ -153,7 +157,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/alexathon-api/v1/1581792186017-2020-02-15T18:43:06.017Z/alexathon-api.zip"
+                "S3Key": "serverless/alexathon-api/v1/1581793294869-2020-02-15T19:01:34.869Z/alexathon-api.zip"
               },
               "FunctionName": "alexathon-api-v1-samples",
               "Handler": "src/api/bin/index.handler",
@@ -169,7 +173,8 @@
               "Environment": {
                 "Variables": {
                   "DEBUG": true,
-                  "TABLE": "provas"
+                  "TABLE_PROVAS": "provas",
+                  "TABLE_QUESTOES": "questoes"
                 }
               }
             },
@@ -178,14 +183,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "SamplesLambdaVersionJmu60whygAeLTWf2KqF32Wtxh9Svr7NjETQmZTRn8qo": {
+          "SamplesLambdaVersionamgErU9zWTAbVR1AQRR3640Mcf9PbQu9KPQRpoFI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SamplesLambdaFunction"
               },
-              "CodeSha256": "L/GzACXSGkUWQ6irBPeBQEQm1i8CT50bILc0t1ZAzCM="
+              "CodeSha256": "9H1c722qFXUNwBsEghGHdv8fxeW5CznXwcqfaoiloqo="
             }
           },
           "ApiGatewayRestApi": {
@@ -316,7 +321,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1581792183890": {
+          "ApiGatewayDeployment1581793292616": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -376,7 +381,7 @@
           "SamplesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SamplesLambdaVersionJmu60whygAeLTWf2KqF32Wtxh9Svr7NjETQmZTRn8qo"
+              "Ref": "SamplesLambdaVersionamgErU9zWTAbVR1AQRR3640Mcf9PbQu9KPQRpoFI"
             }
           },
           "ServiceEndpoint": {
@@ -434,7 +439,8 @@
       "vpc": {}
     },
     "custom": {
-      "table": "provas"
+      "table_provas": "provas",
+      "table_questoes": "questoes"
     },
     "plugins": [
       "serverless-webpack",
@@ -487,7 +493,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/alexathon-api/v1/1581792186017-2020-02-15T18:43:06.017Z",
+    "artifactDirectoryName": "serverless/alexathon-api/v1/1581793294869-2020-02-15T19:01:34.869Z",
     "artifact": ""
   }
 }
