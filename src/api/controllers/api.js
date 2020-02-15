@@ -1,6 +1,7 @@
 import express from 'express'
 import nodemailer from 'nodemailer'
 import { OK, CREATED } from 'http-status-codes'
+import uuid from 'uuid/v4'
 
 import provas from '../objects/provas'
 import DynamoClient from '../utils/dynamo-client'
@@ -40,7 +41,7 @@ router.get('/provas/:prova_id/questoes/:questao_id', async (req, res) => {
 })
 
 router.post('/provas/:prova_id/respostas', async (req, res) => {
-  const resposta = { ...req.body, prova_id: req.params.prova_id }
+  const resposta = { ...req.body, prova_id: req.params.prova_id, id: uuid() }
 
   await dc.put({ TableName: TableRespostas, Item: resposta })
 
