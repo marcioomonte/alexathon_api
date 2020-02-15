@@ -98,6 +98,9 @@
                     },
                     {
                       "Fn::ImportValue": "questoes-QuestaoTableArn"
+                    },
+                    {
+                      "Fn::ImportValue": "respostas-RespostaTableArn"
                     }
                   ]
                 }
@@ -128,7 +131,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/alexathon-api/v1/1581793294869-2020-02-15T19:01:34.869Z/alexathon-api.zip"
+          "S3Key": "serverless/alexathon-api/v1/1581794590698-2020-02-15T19:23:10.698Z/alexathon-api.zip"
         },
         "FunctionName": "alexathon-api-v1-samples",
         "Handler": "src/api/bin/index.handler",
@@ -145,7 +148,8 @@
           "Variables": {
             "DEBUG": true,
             "TABLE_PROVAS": "provas",
-            "TABLE_QUESTOES": "questoes"
+            "TABLE_QUESTOES": "questoes",
+            "TABLE_RESPOSTAS": "respostas"
           }
         }
       },
@@ -154,14 +158,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "SamplesLambdaVersionamgErU9zWTAbVR1AQRR3640Mcf9PbQu9KPQRpoFI": {
+    "SamplesLambdaVersionQYYOss4Zbj9XCJuI1cdwzvHQEvRvc6mIqTyWZbqGX4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "SamplesLambdaFunction"
         },
-        "CodeSha256": "9H1c722qFXUNwBsEghGHdv8fxeW5CznXwcqfaoiloqo="
+        "CodeSha256": "GrIuLPddjWmAuTaoUsfCJ3d4bRQ+Fw/9UrHIN1S1ol4="
       }
     },
     "ApiGatewayRestApi": {
@@ -292,7 +296,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1581793292616": {
+    "ApiGatewayDeployment1581794587116": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -352,7 +356,7 @@
     "SamplesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SamplesLambdaVersionamgErU9zWTAbVR1AQRR3640Mcf9PbQu9KPQRpoFI"
+        "Ref": "SamplesLambdaVersionQYYOss4Zbj9XCJuI1cdwzvHQEvRvc6mIqTyWZbqGX4"
       }
     },
     "ServiceEndpoint": {
