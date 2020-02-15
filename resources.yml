@@ -1,0 +1,35 @@
+service:
+  name: alexathon-api-resources
+
+custom:
+  table: 'provas'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: v1
+
+resources:
+  Resources:
+    ProvaDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.table}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+  Outputs:
+    ProvaTableArn:
+      Value:
+        Fn::GetAtt:
+          - ProvaDynamoDBTable
+          - Arn
+      Export:
+        Name: ${self:custom.table}-ProvaTableArn

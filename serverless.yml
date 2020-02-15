@@ -6,23 +6,7 @@ plugins:
   - serverless-offline
 
 custom:
-  table: 'provas'
-
-resources:
-  Resources:
-    ProvaTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.table}
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+  table: ${file(./resources.yml):custom.table}
 
 provider:
   name: aws
@@ -40,7 +24,8 @@ provider:
     - Effect: Allow
       Action:
         - dynamodb:*
-      Resource: 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.table}'
+      Resource:
+        - 'Fn::ImportValue': ${self:custom.table}-ProvaTableArn
   environment:
     DEBUG: true
     TABLE: ${self:custom.table}
