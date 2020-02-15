@@ -39,7 +39,7 @@ router.get('/provas/:prova_id/questao/:questao_id', async (req, res) => {
 })
 
 router.post('/provas/:prova_id/respostas', async (req, res) => {
-  const resposta = req.body
+  const resposta = { ...req.body, prova_id: req.params.prova_id }
 
   await dc.put({ TableName: TableRespostas, Item: resposta })
 
