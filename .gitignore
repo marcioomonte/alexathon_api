@@ -1,1 +1,6 @@
 node_modules
+.serverless
+.code
+.webpack
+.vscode
+*.log

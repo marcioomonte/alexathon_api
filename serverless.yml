@@ -5,6 +5,9 @@ plugins:
   - serverless-webpack
   - serverless-offline
 
+custom:
+  table: ${file(./resources.yml):custom.table}
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -18,8 +21,14 @@ provider:
         - logs:CreateLogStream
         - logs:PutLogEvents
       Resource: '*'
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - 'Fn::ImportValue': ${self:custom.table}-ProvaTableArn
   environment:
     DEBUG: true
+    TABLE: ${self:custom.table}
 
 functions:
   samples:

@@ -9,6 +9,7 @@
   "scripts": {
     "serverless": "serverless",
     "deploy": "sls deploy",
+    "resources-deploy": "serverless deploy --config ./resources.yml",
     "logs": "serverless logs -t -f"
   },
   "dependencies": {

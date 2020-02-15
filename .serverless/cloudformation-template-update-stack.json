@@ -86,6 +86,17 @@
                     "logs:PutLogEvents"
                   ],
                   "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:*"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::ImportValue": "provas-ProvaTableArn"
+                    }
+                  ]
                 }
               ]
             }
@@ -114,7 +125,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/alexathon-api/v1/1581787148695-2020-02-15T17:19:08.695Z/alexathon-api.zip"
+          "S3Key": "serverless/alexathon-api/v1/1581792186017-2020-02-15T18:43:06.017Z/alexathon-api.zip"
         },
         "FunctionName": "alexathon-api-v1-samples",
         "Handler": "src/api/bin/index.handler",
@@ -129,9 +140,8 @@
         "Timeout": 30,
         "Environment": {
           "Variables": {
-            "STAGE": "dev",
-            "ENABLE_DOCS": true,
-            "DEBUG": true
+            "DEBUG": true,
+            "TABLE": "provas"
           }
         }
       },
@@ -140,14 +150,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "SamplesLambdaVersionKC1ZQdL3xiAuUSck89rJZMb5xpClbP5ACAdS1iZYg": {
+    "SamplesLambdaVersionJmu60whygAeLTWf2KqF32Wtxh9Svr7NjETQmZTRn8qo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "SamplesLambdaFunction"
         },
-        "CodeSha256": "FmJtCrtw7MdKuZjDyvJlf/dQh1MmJ3Sb1/3f0JB0/2g="
+        "CodeSha256": "L/GzACXSGkUWQ6irBPeBQEQm1i8CT50bILc0t1ZAzCM="
       }
     },
     "ApiGatewayRestApi": {
@@ -161,7 +171,7 @@
         }
       }
     },
-    "ApiGatewayResourceSamples": {
+    "ApiGatewayResourceApi": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -170,17 +180,17 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "samples",
+        "PathPart": "api",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayResourceSamplesProxyVar": {
+    "ApiGatewayResourceApiProxyVar": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
-          "Ref": "ApiGatewayResourceSamples"
+          "Ref": "ApiGatewayResourceApi"
         },
         "PathPart": "{proxy+}",
         "RestApiId": {
@@ -188,7 +198,7 @@
         }
       }
     },
-    "ApiGatewayMethodSamplesProxyVarOptions": {
+    "ApiGatewayMethodApiProxyVarOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -228,20 +238,20 @@
           ]
         },
         "ResourceId": {
-          "Ref": "ApiGatewayResourceSamplesProxyVar"
+          "Ref": "ApiGatewayResourceApiProxyVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodSamplesProxyVarAny": {
+    "ApiGatewayMethodApiProxyVarAny": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "ANY",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceSamplesProxyVar"
+          "Ref": "ApiGatewayResourceApiProxyVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -278,7 +288,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1581787146464": {
+    "ApiGatewayDeployment1581792183890": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -287,8 +297,8 @@
         "StageName": "v1"
       },
       "DependsOn": [
-        "ApiGatewayMethodSamplesProxyVarOptions",
-        "ApiGatewayMethodSamplesProxyVarAny"
+        "ApiGatewayMethodApiProxyVarOptions",
+        "ApiGatewayMethodApiProxyVarAny"
       ]
     },
     "SamplesLambdaPermissionApiGateway": {
@@ -338,7 +348,7 @@
     "SamplesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SamplesLambdaVersionKC1ZQdL3xiAuUSck89rJZMb5xpClbP5ACAdS1iZYg"
+        "Ref": "SamplesLambdaVersionJmu60whygAeLTWf2KqF32Wtxh9Svr7NjETQmZTRn8qo"
       }
     },
     "ServiceEndpoint": {
