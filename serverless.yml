@@ -5,15 +5,6 @@ plugins:
   - serverless-webpack
   - serverless-offline
 
-custom:
-  stage_app: ${opt:cfg}
-  local:
-    debug: true
-    docs: true
-  dev:
-    debug: true
-    docs: true
-
 provider:
   name: aws
   runtime: nodejs12.x
@@ -28,9 +19,7 @@ provider:
         - logs:PutLogEvents
       Resource: '*'
   environment:
-    STAGE: ${opt:cfg}
-    ENABLE_DOCS: ${self:custom.${opt:cfg}.docs, 'false'}
-    DEBUG: ${self:custom.${opt:cfg}.debug, 'false'}
+    DEBUG: true
 
 functions:
   samples:
