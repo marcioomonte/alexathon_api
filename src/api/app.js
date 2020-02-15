@@ -1,23 +1,23 @@
-import express from 'express'
-import cors from 'cors'
-import helmet from 'helmet'
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
 
-import 'express-async-errors'
+import 'express-async-errors';
 
-import config from './config'
-import exceptions from './middlewares/exceptions'
+import config from './config';
+import exceptions from './middlewares/exceptions';
 
-import samples from './controllers/samples'
+import api from './controllers/api';
 
-const app = express()
+const app = express();
 
-app.use(helmet())
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use('/samples', samples)
+app.use('/api', api);
 
-app.use(exceptions(config.debug))
+app.use(exceptions(config.debug));
 
-export default app
+export default app;

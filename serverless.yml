@@ -50,6 +50,6 @@ functions:
     handler: src/api/bin/index.handler
     events:
       - http:
-          path: samples/{proxy+}
+          path: api/{proxy+}
           method: ANY
           cors: true
