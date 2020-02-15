@@ -15,14 +15,17 @@ router.get('/provas', async (req, res) => {
 
 router.get('/provas/:prova_id/questoes', async (req, res) => {
   const { prova_id } = req.params;
-
-  const response = questoes.filter(q => q.prova_id === prova_id);
-
-  return res.status(OK).json(response);
+  return res
+    .status(OK)
+    .json(questoes.filter(q => q.prova_id === Number(prova_id)));
 });
 
-router.post('/prova/:id/questao', async (req, res) => {
-  res.status(OK).json({ questao: `${req.params.id}` });
+router.get('/provas/:prova_id/questao/:questao_id', async (req, res) => {
+  const { questao_id } = req.params;
+
+  const questao = questoes.filter(q => q.id === Number(questao_id));
+
+  res.status(OK).json(questao);
 });
 
 export default router;
