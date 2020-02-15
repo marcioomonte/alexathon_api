@@ -86,6 +86,13 @@
                     "logs:PutLogEvents"
                   ],
                   "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:*"
+                  ],
+                  "Resource": "arn:aws:dynamodb:us-east-1:*:table/provas"
                 }
               ]
             }
@@ -114,7 +121,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/alexathon-api/v1/1581787148695-2020-02-15T17:19:08.695Z/alexathon-api.zip"
+          "S3Key": "serverless/alexathon-api/v1/1581790959336-2020-02-15T18:22:39.336Z/alexathon-api.zip"
         },
         "FunctionName": "alexathon-api-v1-samples",
         "Handler": "src/api/bin/index.handler",
@@ -129,9 +136,8 @@
         "Timeout": 30,
         "Environment": {
           "Variables": {
-            "STAGE": "dev",
-            "ENABLE_DOCS": true,
-            "DEBUG": true
+            "DEBUG": true,
+            "TABLE": "provas"
           }
         }
       },
@@ -140,7 +146,7 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "SamplesLambdaVersionKC1ZQdL3xiAuUSck89rJZMb5xpClbP5ACAdS1iZYg": {
+    "SamplesLambdaVersionJmWyudbCRZ4Gr8CrjuKBmRw6p448nzxTFwJdujPy1pQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
@@ -278,7 +284,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1581787146464": {
+    "ApiGatewayDeployment1581790956990": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -327,6 +333,28 @@
           ]
         }
       }
+    },
+    "ProvaTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "TableName": "provas",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "id",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
+        }
+      }
     }
   },
   "Outputs": {
@@ -338,7 +366,7 @@
     "SamplesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SamplesLambdaVersionKC1ZQdL3xiAuUSck89rJZMb5xpClbP5ACAdS1iZYg"
+        "Ref": "SamplesLambdaVersionJmWyudbCRZ4Gr8CrjuKBmRw6p448nzxTFwJdujPy1pQ"
       }
     },
     "ServiceEndpoint": {

@@ -5,6 +5,25 @@ plugins:
   - serverless-webpack
   - serverless-offline
 
+custom:
+  table: 'provas'
+
+resources:
+  Resources:
+    ProvaTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.table}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -18,8 +37,13 @@ provider:
         - logs:CreateLogStream
         - logs:PutLogEvents
       Resource: '*'
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.table}'
   environment:
     DEBUG: true
+    TABLE: ${self:custom.table}
 
 functions:
   samples:
